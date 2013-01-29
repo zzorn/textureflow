@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tflow:TextureFlowMainWindow title="TextureFlow" maximized="true"
+    xmlns:bxml="http://pivot.apache.org/bxml"
+    xmlns="org.apache.pivot.wtk"
+    xmlns:tflow="org.textureflow">
+
+    <BoxPane orientation="vertical"
+        styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
+        <Label text="Testing."/>
+        <PushButton bxml:id="testButton" buttonData="Test"/>
+    </BoxPane>
+
+</tflow:TextureFlowMainWindow>
