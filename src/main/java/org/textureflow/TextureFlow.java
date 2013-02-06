@@ -7,6 +7,7 @@ import org.apache.pivot.wtk.DesktopApplicationContext;
 import org.apache.pivot.wtk.Display;
 import org.textureflow.model.Project;
 import org.textureflow.ui.MainUi;
+import org.textureflow.ui.MainUi2;
 import org.textureflow.utils.AbstractCommand;
 import org.textureflow.utils.Command;
 import org.textureflow.utils.CommandAction;
@@ -21,10 +22,8 @@ public class TextureFlow implements Application  {
 
     private static Project currentProject = new Project();
     private static final CommandQueue commandQueue = new CommandQueue();
-    private static MainUi mainUi;
+    private static MainUi2 mainUi2 = new MainUi2();
 
-
-    TextureFlowMainWindow window = null;
 
     public static final CommandAction EXIT_ACTION = new CommandAction("Exit") {
         @Override
@@ -33,8 +32,9 @@ public class TextureFlow implements Application  {
                 @Override
                 public boolean execute(Project project) {
                     if (currentProject != null && currentProject.hasUnsavedChanges()) {
+                        // TODO: Replace with pivot thingy
                         final int result = JOptionPane.showConfirmDialog(
-                                mainUi.getFrame(),
+                                null,
                                 "The project has unsaved changes, exit anyway?",
                                 "Unsaved changes",
                                 JOptionPane.YES_NO_OPTION,
@@ -87,9 +87,7 @@ public class TextureFlow implements Application  {
      */
     @Override
     public void startup(Display display, Map<String, String> properties) throws Exception {
-        BXMLSerializer serializer = new BXMLSerializer();
-        window = (TextureFlowMainWindow) serializer.readObject(getClass().getResource("TextureFlowMainWindow.bxml"));
-        window.open(display);
+        mainUi2.openMainUi(display);
     }
 
     /**
@@ -104,9 +102,7 @@ public class TextureFlow implements Application  {
      */
     @Override
     public boolean shutdown(boolean optional) throws Exception {
-        if (window != null) {
-            window.close();
-        }
+        mainUi2.closeMainUi();
 
         return false;
     }

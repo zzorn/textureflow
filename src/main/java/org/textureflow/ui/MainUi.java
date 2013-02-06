@@ -20,10 +20,6 @@ public class MainUi {
     private SimpleFrame frame;
 
     public void startMainUi() {
-        frame = new SimpleFrame("TextureFlow", createMainPanel());
-        frame.setJMenuBar(createMenuBar());
-
-        frame.pack();
     }
 
     private JMenuBar createMenuBar() {
