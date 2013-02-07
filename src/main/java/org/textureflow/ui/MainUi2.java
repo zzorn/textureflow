@@ -2,12 +2,10 @@ package org.textureflow.ui;
 
 import org.apache.pivot.wtk.*;
 import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.Panel;
 import org.apache.pivot.wtk.Point;
 import org.apache.pivot.wtk.Window;
-import org.textureflow.model.Effect;
-import org.textureflow.model.Library;
-import org.textureflow.model.Project;
-import org.textureflow.model.Texture;
+import org.textureflow.model.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -24,6 +22,7 @@ public class MainUi2 {
     private Texture texture;
     private ListView effectList;
     private ListView libraryList;
+    private TextureView texturePreview;
 
     public MainUi2(Library basicLibrary) {
         this.basicLibrary = basicLibrary;
@@ -39,6 +38,7 @@ public class MainUi2 {
 
 
         // Create preview of the texture
+        texturePreview = new TextureView();
 
 
         // Create menu with export, save, etc.
@@ -46,6 +46,7 @@ public class MainUi2 {
 
         // Create library with effects or composite effects
         libraryList = new ListView(basicLibrary.getEntries());
+
         libraryList.setDragSource(createListDragSource(libraryList));
 
         /*
@@ -70,9 +71,10 @@ public class MainUi2 {
         label.getStyles().put("verticalAlignment", VerticalAlignment.CENTER);
         */
 
-        SplitPane split= new SplitPane(Orientation.HORIZONTAL, libraryList, effectList);
+        SplitPane split1= new SplitPane(Orientation.HORIZONTAL, libraryList, effectList);
+        SplitPane split2= new SplitPane(Orientation.HORIZONTAL, split1, texturePreview);
 
-        mainWindow.setContent(split);
+        mainWindow.setContent(split2);
         mainWindow.setTitle("TextureFlow");
         mainWindow.setMaximized(true);
 
@@ -207,6 +209,7 @@ public class MainUi2 {
         this.texture = texture;
 
         effectList.setListData(texture.getEffects());
+        texturePreview.setTexture(texture);
     }
 
     public void closeMainUi() {

@@ -2,6 +2,9 @@ package org.textureflow.model;
 
 import org.apache.pivot.wtk.content.ListItem;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 /**
  *
  */
@@ -47,4 +50,5 @@ public abstract class Effect extends ListItem {
         throw new UnsupportedOperationException("Not supported");
     }
 
+    public abstract void render(Graphics2D g, int w, int h);
 }
