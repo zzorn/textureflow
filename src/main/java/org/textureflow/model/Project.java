@@ -12,7 +12,9 @@ import java.util.List;
  */
 public class Project {
 
-    private final List<Texture> textures = new ArrayList<Texture>();
+    private Texture texture = new Texture();
+
+    //private final List<Texture> textures = new ArrayList<Texture>();
 
     private boolean changesMade = false;
 
@@ -35,4 +37,8 @@ public class Project {
         return changesMade;
     }
 
+
+    public Texture getCurrentTexture() {
+        return texture;
+    }
 }

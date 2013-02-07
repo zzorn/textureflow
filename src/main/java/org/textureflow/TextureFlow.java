@@ -5,6 +5,8 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.wtk.Application;
 import org.apache.pivot.wtk.DesktopApplicationContext;
 import org.apache.pivot.wtk.Display;
+import org.textureflow.model.FillColorEffect;
+import org.textureflow.model.Library;
 import org.textureflow.model.Project;
 import org.textureflow.ui.MainUi;
 import org.textureflow.ui.MainUi2;
@@ -14,6 +16,7 @@ import org.textureflow.utils.CommandAction;
 import org.textureflow.utils.CommandQueue;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -22,8 +25,8 @@ public class TextureFlow implements Application  {
 
     private static Project currentProject = new Project();
     private static final CommandQueue commandQueue = new CommandQueue();
-    private static MainUi2 mainUi2 = new MainUi2();
-
+    private static Library basicLibrary = createBasicLibrary();
+    private static MainUi2 mainUi2 = new MainUi2(basicLibrary);
 
     public static final CommandAction EXIT_ACTION = new CommandAction("Exit") {
         @Override
@@ -88,6 +91,7 @@ public class TextureFlow implements Application  {
     @Override
     public void startup(Display display, Map<String, String> properties) throws Exception {
         mainUi2.openMainUi(display);
+        mainUi2.showProject(currentProject);
     }
 
     /**
@@ -120,4 +124,15 @@ public class TextureFlow implements Application  {
     @Override
     public void resume() throws Exception {
     }
+
+
+    private static Library createBasicLibrary() {
+        Library library = new Library();
+
+        library.addEntry(new FillColorEffect("Red", Color.RED));
+        library.addEntry(new FillColorEffect("Blue", Color.BLUE));
+
+        return library;
+    }
+
 }
