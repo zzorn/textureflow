@@ -135,10 +135,8 @@ public class TextureFlow implements Application  {
 
         library.addEntry(new FillColorEffect("Shadow", new Color(0, 0, 0, 0.33f)));
         library.addEntry(new FillColorEffect("Blue", Color.BLUE));
-        library.addEntry(new BubbleEffect("Blue Bubbles", Color.CYAN, 400, 5, 20));
-        library.addEntry(new BubbleEffect("Large White Soap", Color.WHITE, 100, 20, 60));
         library.addEntry(new PartEffect("Grey blobs", new CirclePartRenderer(Color.GRAY), 40, 20, 30));
-        library.addEntry(new PartEffect("Blobs", new PictureRenderer(loadImage("testpic1.png")), 20, 30, 100));
+        library.addEntry(new PartEffect("Blobs", new PictureRenderer(loadImage("testpic1.png")), 20, 20, 50));
         library.addEntry(new PartEffect("Suns", new PictureRenderer(loadImage("sun.png")), 60, 10, 30));
 
         return library;

@@ -86,7 +86,7 @@ public class Texture {
             image = createImage();
         }
         else {
-            renderTexture(image.createGraphics(), width, height);
+            renderTexture(image.createGraphics(), 0, 0, width, height);
         }
         return image;
     }
@@ -94,32 +94,32 @@ public class Texture {
 
     public BufferedImage createImage() {
         final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        renderTexture(bufferedImage.createGraphics(), width, height);
+        renderTexture(bufferedImage.createGraphics(), 0, 0, width, height);
         return bufferedImage;
     }
 
     public void renderTexture(Graphics2D g) {
-        final Shape oldClip = g.getClip();
+        renderTexture(g, 0, 0, width, height);
+    }
 
-        g.setClip(0, 0, width, height);
-        renderTexture(g, width, height);
+    public void renderTexture(Graphics2D g, int x, int y, int w, int h) {
+        final Shape oldClip = g.getClip();
+        g.setClip(x, y, w, h);
+
+        clearToTransparent(g, x, y, w, h);
+
+        for (Effect effect : effects) {
+            effect.render(g, x, y, w, h);
+        }
 
         g.setClip(oldClip);
     }
 
-    public void renderTexture(Graphics2D g, int w, int h) {
-        clearToTransparent(g, w, h);
-
-        for (Effect effect : effects) {
-            effect.render(g, w, h);
-        }
-    }
-
-    private void clearToTransparent(Graphics2D g, int w, int h) {
+    private void clearToTransparent(Graphics2D g, int x, int y, int w, int h) {
         final Composite oldComposite = g.getComposite();
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR));
 
-        g.fillRect(0, 0, w, h);
+        g.fillRect(x, y, w, h);
 
         g.setComposite(oldComposite);
     }

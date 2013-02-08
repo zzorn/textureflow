@@ -25,8 +25,8 @@ public class FillColorEffect extends Effect {
     }
 
     @Override
-    public void render(Graphics2D g, int w, int h) {
+    public void render(Graphics2D g, int x, int y, int w, int h) {
         g.setColor(color);
-        g.fillRect(0,0,w,h);
+        g.fillRect(x, y, w, h);
     }
 }

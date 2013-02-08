@@ -13,14 +13,21 @@ public class TextureView extends Component {
     private final TextureViewSkin textureViewSkin = new TextureViewSkin();
     private Texture texture;
 
+    private int tiles = 1;
 
-    public TextureView() {
-        this(null);
+    private int w = 256;
+    private int h = 256;
+
+    public TextureView(int tiles) {
+        this(null, tiles, 256, 256);
     }
 
-    public TextureView(Texture textureIn) {
+    public TextureView(Texture textureIn, int tiles, int w, int h) {
         setSkin(textureViewSkin);
         setTexture(textureIn);
+        this.tiles = tiles;
+        this.w = w;
+        this.h = h;
     }
 
     public Texture getTexture() {
@@ -49,20 +56,25 @@ public class TextureView extends Component {
 
         @Override
         public int getPreferredWidth(int height) {
-            if (texture != null) return texture.getWidth();
-            else return 0;
+            return w;
         }
 
         @Override
         public int getPreferredHeight(int width) {
-            if (texture != null) return texture.getHeight();
-            else return 0;
+            return h;
         }
 
         @Override
         public void paint(Graphics2D graphics) {
             if (texture != null) {
-                texture.renderTexture(graphics);
+                int tw = w / tiles;
+                int th = h / tiles;
+                for (int y = 0; y < tiles; y++) {
+                    for (int x = 0; x < tiles; x++) {
+
+                        texture.renderTexture(graphics, x * tw, y * th, tw, th);
+                    }
+                }
             }
         }
 

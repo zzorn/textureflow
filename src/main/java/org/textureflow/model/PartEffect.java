@@ -34,27 +34,33 @@ public class PartEffect extends Effect {
     }
 
     @Override
-    public void render(Graphics2D g, int w, int h) {
+    public void render(Graphics2D g, int x, int y, int w, int h) {
         random.setSeed(randomSeed);
 
         for (int i = 0; i < num; i++) {
             final long seed = random.nextLong();
             final int size = minSize + random.nextInt(maxSize - minSize);
-            final int sizeX = size;
-            final int sizeY = size;
-            final int x1 = random.nextInt(w + sizeX) - sizeX;
-            final int y1 = random.nextInt(h + sizeY) - sizeY;
-            final int x2 = x1 + sizeX;
-            final int y2 = y1 + sizeY;
+            final int partSizeX = size;
+            final int partSizeY = size;
+            final int x1 = x + random.nextInt(w + partSizeX) - partSizeX;
+            final int y1 = y + random.nextInt(h + partSizeY) - partSizeY;
 
             // Render
-            if (x1 < 0 && y1 < 0) texturePartRenderer.render(g, seed, x1 + w, y1 + h, sizeX, sizeY);
-            if (x1 < 0) texturePartRenderer.render(g, seed, x1 + w, y1, sizeX, sizeY);
-            if (y1 < 0) texturePartRenderer.render(g, seed, x1, y1 + h, sizeX, sizeY);
-            texturePartRenderer.render(g, seed, x1, y1, sizeX, sizeY);
-            if (x2 > w) texturePartRenderer.render(g, seed, x1 - w, y1, sizeX, sizeY);
-            if (y2 > h) texturePartRenderer.render(g, seed, x1, y1 - h, sizeX, sizeY);
-            if (x2 > w && y2 > h) texturePartRenderer.render(g, seed, x1 - h, y1 - h, sizeX, sizeY);
+            for (int tx = -1; tx <= 1; tx++) {
+                for (int ty = -1; ty <= 1; ty++) {
+                    final int xPos = x1 + w * tx;
+                    final int yPos = y1 + h * ty;
+
+                    if (isInside(xPos, yPos, partSizeX, partSizeY, x, y, w, h)) {
+                        texturePartRenderer.render(g, seed, xPos, yPos, partSizeX, partSizeY);
+                    }
+                }
+            }
         }
+    }
+
+    private boolean isInside(int xPos, int yPos, int partSizeX, int partSizeY, int x, int y, int w, int h) {
+        return xPos + partSizeX >= x && xPos <  x + w &&
+               yPos + partSizeY >= y && yPos <  y + h;
     }
 }

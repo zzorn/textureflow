@@ -38,7 +38,7 @@ public class MainUi2 {
 
 
         // Create preview of the texture
-        texturePreview = new TextureView();
+        texturePreview = new TextureView(2);
 
 
         // Create menu with export, save, etc.

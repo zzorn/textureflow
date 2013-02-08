@@ -50,5 +50,5 @@ public abstract class Effect extends ListItem {
         throw new UnsupportedOperationException("Not supported");
     }
 
-    public abstract void render(Graphics2D g, int w, int h);
+    public abstract void render(Graphics2D g, int x, int y, int w, int h);
 }
