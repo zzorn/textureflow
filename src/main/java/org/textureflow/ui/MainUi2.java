@@ -137,7 +137,7 @@ public class MainUi2 {
 
             @Override
             public boolean beginDrag(Component component, int x, int y) {
-                int itemAt = list.getItemAt(y);
+                int itemAt = list.getSelectedIndex();
                 if (itemAt < 0) return false;
                 else  {
                     lastDraggedEntry = list.getListData().get(itemAt);

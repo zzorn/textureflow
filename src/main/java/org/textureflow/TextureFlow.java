@@ -5,9 +5,9 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.wtk.Application;
 import org.apache.pivot.wtk.DesktopApplicationContext;
 import org.apache.pivot.wtk.Display;
-import org.textureflow.model.FillColorEffect;
-import org.textureflow.model.Library;
-import org.textureflow.model.Project;
+import org.textureflow.model.*;
+import org.textureflow.model.part.CirclePartRenderer;
+import org.textureflow.model.part.PictureRenderer;
 import org.textureflow.ui.MainUi;
 import org.textureflow.ui.MainUi2;
 import org.textureflow.utils.AbstractCommand;
@@ -15,8 +15,12 @@ import org.textureflow.utils.Command;
 import org.textureflow.utils.CommandAction;
 import org.textureflow.utils.CommandQueue;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -129,10 +133,25 @@ public class TextureFlow implements Application  {
     private static Library createBasicLibrary() {
         Library library = new Library();
 
-        library.addEntry(new FillColorEffect("Red", Color.RED));
+        library.addEntry(new FillColorEffect("Shadow", new Color(0, 0, 0, 0.33f)));
         library.addEntry(new FillColorEffect("Blue", Color.BLUE));
+        library.addEntry(new BubbleEffect("Blue Bubbles", Color.CYAN, 400, 5, 20));
+        library.addEntry(new BubbleEffect("Large White Soap", Color.WHITE, 100, 20, 60));
+        library.addEntry(new PartEffect("Grey blobs", new CirclePartRenderer(Color.GRAY), 40, 20, 30));
+        library.addEntry(new PartEffect("Blobs", new PictureRenderer(loadImage("testpic1.png")), 20, 30, 100));
+        library.addEntry(new PartEffect("Suns", new PictureRenderer(loadImage("sun.png")), 60, 10, 30));
 
         return library;
+    }
+
+    private static BufferedImage loadImage(String name) {
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("assets/" + name));
+        } catch (IOException e) {
+            System.out.println("Problem loading file" + e.getMessage());
+        }
+        return img;
     }
 
 }

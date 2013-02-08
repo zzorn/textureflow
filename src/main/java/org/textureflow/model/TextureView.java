@@ -61,7 +61,9 @@ public class TextureView extends Component {
 
         @Override
         public void paint(Graphics2D graphics) {
-            if (texture != null) texture.renderTexture(graphics);
+            if (texture != null) {
+                texture.renderTexture(graphics);
+            }
         }
 
         @Override

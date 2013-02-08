@@ -21,14 +21,14 @@ public class Texture {
 
     private BufferedImage image;
 
-    private int width = 128;
-    private int height = 128;
+    private int width = 256;
+    private int height = 256;
 
     private TextureListenerList textureListeners = new TextureListenerList();
 
 
     public Texture() {
-        this(128, 128);
+        this(256, 256);
     }
 
     public Texture(int width, int height) {
@@ -99,7 +99,12 @@ public class Texture {
     }
 
     public void renderTexture(Graphics2D g) {
+        final Shape oldClip = g.getClip();
+
+        g.setClip(0, 0, width, height);
         renderTexture(g, width, height);
+
+        g.setClip(oldClip);
     }
 
     public void renderTexture(Graphics2D g, int w, int h) {
